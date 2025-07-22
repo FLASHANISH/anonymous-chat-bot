@@ -1,0 +1,8 @@
+{
+  "install": "pip3 install -r requirements.txt",
+  "start": "python3 python.py",
+  "watch": {
+    "ignore": ["\\logs/", "\\node_modules/"],
+    "throttle": 100
+  }
+}
