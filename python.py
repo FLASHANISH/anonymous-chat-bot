@@ -16,6 +16,12 @@ logger = logging.getLogger(__name__)
 import os
 TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 
+if not TOKEN:
+    print("❌ Error: TELEGRAM_BOT_TOKEN environment variable not set!")
+    print("💡 For local testing, set it using: set TELEGRAM_BOT_TOKEN=your_token")
+    print("💡 For deployment, add it as an environment variable on your platform")
+    exit(1)
+
 # Global data structures
 user_queue = deque()
 active_chats = {}
