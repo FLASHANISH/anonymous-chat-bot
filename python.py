@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 # Bot Token (Provided by the user)
 import os
-TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+TOKEN = os.getenv('7547606534:AAHuZOUjwiDAuN5fqKSEZ2_yxmHNEmiugoQ')
 
 if not TOKEN:
     print("❌ Error: TELEGRAM_BOT_TOKEN environment variable not set!")
