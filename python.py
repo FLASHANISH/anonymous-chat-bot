@@ -2,6 +2,7 @@ import logging
 import random
 import string
 import re # Import regex module
+import httpx # Import httpx for async requests
 from telegram import Update, BotCommand, InlineKeyboardButton, InlineKeyboardMarkup # Import InlineKeyboard
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler
 from collections import deque
@@ -14,13 +15,8 @@ logger = logging.getLogger(__name__)
 
 # Bot Token (Provided by the user)
 import os
-TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
-
-if not TOKEN:
-    print("❌ Error: TELEGRAM_BOT_TOKEN environment variable not set!")
-    print("💡 For local testing, set it using: set TELEGRAM_BOT_TOKEN=your_token")
-    print("💡 For deployment, add it as an environment variable on your platform")
-    exit(1)
+TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', "7644689902:AAGWSy5vsMmVB7x5xpalMZnAjSpbN3jUCnU")
+OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY', "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")
 
 # Global data structures
 user_queue = deque()
@@ -198,6 +194,26 @@ async def end_chat(user_id: int, context: ContextTypes.DEFAULT_TYPE, notify_part
         logger.info(f"Chat {chat_id} ended. User {user_id} left.")
         return True
     return False
+
+# --- Flirting Function ---
+async def generate_flirt_message(user_id: int) -> str:
+    """
+    Generates a flirty message using OpenRouter AI API.
+    """
+    payload = {
+        "prompt": "Generate a flirty message.",
+        "temperature": 0.7
+    }
+    headers = {"Authorization": f"Bearer {OPENROUTER_API_KEY}"}
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post("https://api.openrouter.ai/v1/messages", json=payload, headers=headers)
+            response.raise_for_status()
+            return response.json().get("generated_text", "Hi there! 😊")
+    except Exception as e:
+        logger.error(f"Failed to generate flirt message: {e}")
+        return "Couldn't generate a flirty message at the moment. Try again later! 🌻"
+
 
 # --- Command Handlers ---
 
@@ -394,6 +410,15 @@ async def unblock_user(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 # --- Message Handler ---
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    "Handle messages, include flirty responses."
+    user_id = update.effective_user.id
+
+    if user_id in blocked_users:
+        return
+
+    # Generate a flirty message when a non-command text is received
+    flirt_message = await generate_flirt_message(user_id)
+    await context.bot.send_message(chat_id=user_id, text=flirt_message)
     """Forwards messages between connected users, with content filtering."""
     user_id = update.effective_user.id
     message_text = update.effective_message.text
