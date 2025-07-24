@@ -1,22 +1,25 @@
 # 🤖 Anonymous Telegram Chat Bot
 
-A Telegram bot that enables anonymous chatting between users with multi-language support (Hindi/English).
+A feature-rich Telegram bot that enables anonymous chatting between users with multi-language support (Hindi/English) and advanced moderation features.
 
 ## 🚀 Features
 
 - **Anonymous Chat**: Connect random users for private conversations
-- **Multi-language**: Support for Hindi and English
+- **Multi-language Support**: Full Hindi and English language support
 - **Content Filtering**: Blocks inappropriate links and usernames
-- **Admin Controls**: Broadcast, block/unblock users, reports
-- **Queue System**: Smart user matching algorithm
-- **24/7 Operation**: Designed for continuous deployment
+- **Admin Controls**: Broadcast messages, block/unblock users, handle reports
+- **Smart Queue System**: Intelligent user matching algorithm
+- **Interactive UI**: Inline keyboards for better user experience
+- **24/7 Operation**: Designed for continuous deployment on various platforms
+- **Keep-Alive System**: Built-in web server for Replit/hosting platforms
 
 ## 🛠️ Tech Stack
 
 - **Python 3.11+**
-- **python-telegram-bot** library
-- **Async/Await** for high performance
-- **Logging** for monitoring
+- **python-telegram-bot 22.3** - Modern async Telegram bot framework
+- **Flask** - Web server for keep-alive functionality
+- **Async/Await** - High performance asynchronous operations
+- **Advanced Logging** - Comprehensive monitoring and debugging
 
 ## 📦 Deployment
 
